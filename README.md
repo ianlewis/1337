@@ -6,6 +6,11 @@ This repository contains various LEET (1337) code examples and solutions to
 coding problems, challenges, and algorithms. The goal is to provide a collection
 of well-documented and efficient code snippets that can be used as references.
 
+## Contents
+
+- [Advent of Code 2024](./aoc2024)
+- [cassidoo Interview Questions of the Week](./cassidoo)
+
 ## Makefile
 
 The `Makefile` is used for managing files and maintaining code quality. It
