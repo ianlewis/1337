@@ -18,6 +18,9 @@ descriptions grouped by function.
 Usage: make [COMMAND]
 
   help                      Print all Makefile targets (this message).
+Tests
+  unit-tests                Run unit tests.
+  integration-tests         Run integration tests.
 Tools
   license-headers           Update license headers.
 Formatting
@@ -28,6 +31,7 @@ Formatting
 Linting
   lint                      Run all linters.
   actionlint                Runs the actionlint linter.
+  clippy                    Runs clippy linter.
   zizmor                    Runs the zizmor linter.
   markdownlint              Runs the markdownlint linter.
   renovate-config-validator Validate Renovate configuration.
