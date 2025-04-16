@@ -149,7 +149,28 @@ license-headers: ## Update license headers.
 #####################################################################
 
 .PHONY: format
-format: json-format md-format yaml-format ## Format all files
+format: go-format json-format md-format rust-format yaml-format ## Format all files
+
+go-format:
+	@set -euo pipefail; \
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'go.mod' '*/go.mod' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			d=$$(dirname "$${f}"); \
+			echo "Formatting Go files in $${d}"; \
+			if ! ( \
+				cd "$${d}" || exit 1; \
+				go tool mvdan.cc/gofumpt -w .; \
+				go tool github.com/daixiang0/gci write  --skip-generated -s standard -s default -s "prefix($$(go list -m))" .; \
+			); then \
+				exit_code=1; \
+			fi; \
+		done; \
+		exit "$${exit_code}";
 
 .PHONY: json-format
 json-format: node_modules/.installed ## Format JSON files.
@@ -176,6 +197,19 @@ md-format: node_modules/.installed ## Format Markdown files.
 			--write \
 			--no-error-on-unmatched-pattern \
 			$${files}
+
+.PHONY: rust-format
+rust-format: ## Runs rustfmt.
+	@set -euo pipefail; \
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'*.rs' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			rustfmt "$${f}"; \
+		done
 
 .PHONY: yaml-format
 yaml-format: node_modules/.installed ## Format YAML files.
@@ -228,7 +262,28 @@ clippy: ## Runs clippy linter.
 		done; \
 		exit "$${exit_code}"; \
 
-
+.PHONY: golangci-lint
+golangci-lint: $(AQUA_ROOT_DIR)/.installed ## Runs golangci-lint linter.
+	@set -euo pipefail; \
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'go.mod' '*/go.mod' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		PATH="$(REPO_ROOT)/.bin/aqua-$(AQUA_VERSION):$(AQUA_ROOT_DIR)/bin:$${PATH}"; \
+		AQUA_ROOT_DIR="$(AQUA_ROOT_DIR)"; \
+		for f in $${files}; do\
+			d=$$(dirname "$${f}"); \
+			echo "Running golangci-lint on $${d}"; \
+			if ! ( \
+				cd "$${d}" || exit 1; \
+				$(REPO_ROOT)/.aqua/bin/golangci-lint run -c $(REPO_ROOT)/.golangci.yml ./...; \
+			); then \
+				exit_code=1; \
+			fi; \
+		done; \
+		exit "$${exit_code}";
 
 .PHONY: zizmor
 zizmor: .venv/.installed ## Runs the zizmor linter.
