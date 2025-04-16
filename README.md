@@ -10,6 +10,7 @@ of well-documented and efficient code snippets that can be used as references.
 
 - [Advent of Code 2024](./aoc2024)
 - [cassidoo Interview Questions of the Week](./cassidoo)
+- [Project Euler Solutions](./euler)
 
 ## Makefile
 
@@ -32,11 +33,13 @@ Formatting
   format                    Format all files
   json-format               Format JSON files.
   md-format                 Format Markdown files.
+  rust-format               Runs rustfmt.
   yaml-format               Format YAML files.
 Linting
   lint                      Run all linters.
   actionlint                Runs the actionlint linter.
   clippy                    Runs clippy linter.
+  golangci-lint             Runs golangci-lint linter.
   zizmor                    Runs the zizmor linter.
   markdownlint              Runs the markdownlint linter.
   renovate-config-validator Validate Renovate configuration.
