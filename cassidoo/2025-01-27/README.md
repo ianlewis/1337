@@ -1,6 +1,7 @@
 # cassidoo 2025-01-27
 
-Cassidoo's 2025-01-27 interview question of the week.
+Cassidoo's Jan 27, 2025 interview question of the week from her
+[newsletter](https://buttondown.com/cassidoo/archive/if-you-are-interested-in-what-you-do-that-keeps/).
 
 ---
 
