@@ -1,6 +1,7 @@
 # cassidoo 2025-02-17
 
-Cassidoo's 2025-02-17 interview question of the week.
+Cassidoo's Feb 17, 2025 interview question of the week from her
+[newsletter](https://buttondown.com/cassidoo/archive/the-truth-is-no-one-of-us-can-be-free-until/).
 
 ---
 
