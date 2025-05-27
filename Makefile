@@ -149,7 +149,7 @@ license-headers: ## Update license headers.
 #####################################################################
 
 .PHONY: format
-format: go-format json-format md-format rust-format yaml-format ## Format all files
+format: go-format js-format json-format md-format rust-format ts-format yaml-format ## Format all files
 
 go-format:
 	@set -euo pipefail; \
@@ -171,6 +171,20 @@ go-format:
 			fi; \
 		done; \
 		exit "$${exit_code}";
+
+js-format: node_modules/.installed ## Format YAML files.
+	@set -euo pipefail; \
+		files=$$( \
+			git ls-files \
+				'*.js' \
+				'*.javascript' \
+		); \
+		if [ "$${files}" == "" ]; then \
+			exit 0; \
+		fi; \
+		./node_modules/.bin/prettier \
+			--write \
+			$${files}
 
 .PHONY: json-format
 json-format: node_modules/.installed ## Format JSON files.
@@ -210,6 +224,21 @@ rust-format: ## Runs rustfmt.
 		for f in $${files}; do\
 			rustfmt "$${f}"; \
 		done
+
+.PHONY: ts-format
+ts-format: node_modules/.installed ## Format YAML files.
+	@set -euo pipefail; \
+		files=$$( \
+			git ls-files \
+				'*.ts' \
+				'*.typescript' \
+		);  \
+		if [ "$${files}" == "" ]; then \
+			exit 0; \
+		fi; \
+		./node_modules/.bin/prettier \
+			--write \
+			$${files}
 
 .PHONY: yaml-format
 yaml-format: node_modules/.installed ## Format YAML files.
