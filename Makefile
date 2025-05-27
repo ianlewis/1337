@@ -124,7 +124,6 @@ license-headers: ## Update license headers.
 				'*.py' \
 				'*.rb' \
 				'*.rs' \
-				'*.toml' \
 				'*.yaml' \
 				'*.yml' \
 				'Makefile' \
