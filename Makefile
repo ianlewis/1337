@@ -149,7 +149,7 @@ license-headers: ## Update license headers.
 #####################################################################
 
 .PHONY: format
-format: go-format json-format md-format rust-format yaml-format ## Format all files
+format: go-format js-format json-format md-format rust-format ts-format yaml-format ## Format all files
 
 go-format:
 	@set -euo pipefail; \
@@ -171,6 +171,23 @@ go-format:
 			fi; \
 		done; \
 		exit "$${exit_code}";
+
+js-format: node_modules/.installed ## Format YAML files.
+	@set -euo pipefail; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'*.js' \
+				'*.cjs' \
+				'*.mjs' \
+				'*.jsx' \
+				'*.mjsx' \
+		); \
+		if [ "$${files}" == "" ]; then \
+			exit 0; \
+		fi; \
+		./node_modules/.bin/prettier \
+			--write \
+			$${files}
 
 .PHONY: json-format
 json-format: node_modules/.installed ## Format JSON files.
@@ -211,6 +228,24 @@ rust-format: ## Runs rustfmt.
 			rustfmt "$${f}"; \
 		done
 
+.PHONY: ts-format
+ts-format: node_modules/.installed ## Format YAML files.
+	@set -euo pipefail; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'*.ts' \
+				'*.cts' \
+				'*.mts' \
+				'*.tsx' \
+				'*.mtsx' \
+		);  \
+		if [ "$${files}" == "" ]; then \
+			exit 0; \
+		fi; \
+		./node_modules/.bin/prettier \
+			--write \
+			$${files}
+
 .PHONY: yaml-format
 yaml-format: node_modules/.installed ## Format YAML files.
 	@set -euo pipefail; \
@@ -228,6 +263,9 @@ yaml-format: node_modules/.installed ## Format YAML files.
 
 .PHONY: lint
 lint: actionlint clippy markdownlint renovate-config-validator textlint yamllint zizmor ## Run all linters.
+	# TODO(#53): Move lint target to aoc2024.
+	# @make -C aoc2024 lint
+	@make -C cassidoo lint
 
 .PHONY: actionlint
 actionlint: $(AQUA_ROOT_DIR)/.installed ## Runs the actionlint linter.
@@ -262,7 +300,7 @@ clippy: ## Runs clippy linter.
 				exit_code=1; \
 			fi; \
 		done; \
-		exit "$${exit_code}"; \
+		exit "$${exit_code}"
 
 .PHONY: golangci-lint
 golangci-lint: $(AQUA_ROOT_DIR)/.installed ## Runs golangci-lint linter.

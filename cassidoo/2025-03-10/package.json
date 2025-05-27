@@ -1,0 +1,20 @@
+{
+  "name": "cassidoo-2025-03-10",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "description": "**Write a function that takes a list of piano keys played in sequence and returns the largest interval (in semitones) between any two consecutive keys.** Assume the lowest note is A0, and the highest is C8.",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
+    "ts-jest-resolver": "^2.0.1",
+    "typescript": "^5.8.3"
+  }
+}

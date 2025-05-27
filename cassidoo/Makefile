@@ -54,20 +54,6 @@ help: ## Print all Makefile targets (this message).
 					} \
 				}'
 
-package-lock.json:
-	npm install
-
-node_modules/.installed: package.json package-lock.json
-	npm ci
-	touch node_modules/.installed
-
-.venv/bin/activate:
-	python -m venv .venv
-
-.venv/.installed: .venv/bin/activate requirements.txt
-	./.venv/bin/pip install -r requirements.txt --require-hashes
-	touch .venv/.installed
-
 ## Linters
 #####################################################################
 
@@ -75,12 +61,18 @@ node_modules/.installed: package.json package-lock.json
 clippy: ## Runs clippy linter.
 	@set -euo pipefail; \
 		exit_code=0; \
-		for i in day*; do\
-			if ! cargo clippy --manifest-path "$$i/Cargo.toml" -- -D warnings; then \
+		files=$$( \
+			git ls-files --deduplicate \
+				'Cargo.toml' '*/Cargo.toml' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			echo "Running clippy on $${f}"; \
+			if ! cargo clippy --manifest-path "$${f}" -- -D warnings; then \
 				exit_code=1; \
 			fi; \
 		done; \
-		exit "$${exit_code}"; \
+		exit "$${exit_code}";
 
 ## Solutions
 #####################################################################
@@ -100,11 +92,45 @@ $(foreach var,$(DAYS),$(eval $(call GEN_RULE,$(var:/=))))
 ## Tests
 #####################################################################
 
-unit-tests: ## Run unit tests.
+.PHONY: unit-tests
+unit-tests: rust-tests ts-tests ## Run unit tests.
+
+.PHONY: rust-tests
+rust-tests: ## Run Rust unit tests.
 	@set -euo pipefail;\
-		for i in */; do\
-			cargo test --manifest-path "$$i/Cargo.toml";\
-		done
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'Cargo.toml' '*/Cargo.toml' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			echo "Running cargo test on $${f}"; \
+			if ! cargo test --manifest-path "$${f}"; then \
+				exit_code=1; \
+			fi; \
+		done; \
+		exit "$${exit_code}"
+
+.PHONY: ts-tests
+ts-tests: ## Run TypeScript unit tests.
+	@set -euo pipefail;\
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'package.json' '*/package.json' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			echo "Running test on $${f}"; \
+			cd "$$(dirname "$${f}")"; \
+			npm clean-install; \
+			npm audit signatures; \
+			if ! npm run test; then \
+				exit_code=1; \
+			fi; \
+		done; \
+		exit "$${exit_code}"
 
 ## Maintenance
 #####################################################################
