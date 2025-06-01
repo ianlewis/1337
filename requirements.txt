@@ -1,8 +1,8 @@
 # Hashes retrieved using instructions here:
 # https://pip.pypa.io/en/stable/cli/pip_hash/#example
-yamllint==1.36.2 \
-    --hash=sha256:6ba19800513d86c987ed3cf48c0aba4e82b3624596e1dab55723b3733e11f35c \
-    --hash=sha256:c9ccc818659736e7b13f7e2f9c3c9bb9ac77445be13e789e7d843e92cb8428ef
+yamllint==1.37.1 \
+    --hash=sha256:364f0d79e81409f591e323725e6a9f4504c8699ddf2d7263d8d2b539cd66a583 \
+    --hash=sha256:81f7c0c5559becc8049470d86046b36e96113637bcbe4753ecef06977c00245d
 zizmor==1.5.1 \
     --hash=sha256:16ccd5be7823b8dfc77e365f634b32dd59124d5437b9c984cda6d794f20e2718 \
     --hash=sha256:2ae4a4985bdf2070103855cd6ebbf83252f0395d126ff164dc579241f2797129 \
