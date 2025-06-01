@@ -4,7 +4,7 @@
   },
   "devDependencies": {
     "dictionary-en": "4.0.0",
-    "markdownlint-cli": "0.44.0",
+    "markdownlint-cli": "0.45.0",
     "prettier": "3.5.3",
     "renovate": "39.220.4",
     "textlint": "14.5.0",
