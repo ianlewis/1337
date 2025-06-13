@@ -6,12 +6,20 @@
   "description": "**Write a function that takes a list of piano keys played in sequence and returns the largest interval (in semitones) between any two consecutive keys.** Assume the lowest note is A0, and the highest is C8.",
   "scripts": {
     "build": "tsc",
+    "lint": "eslint src/ --ext .ts,.tsx",
     "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@stylistic/eslint-plugin-ts": "^4.4.1",
     "@types/jest": "^29.5.14",
+    "@typescript-eslint/eslint-plugin": "^8.34.0",
+    "@typescript-eslint/parser": "^8.34.0",
+    "eslint": "^9.28.0",
+    "eslint-import-resolver-typescript": "^4.4.3",
+    "eslint-plugin-github": "^6.0.0",
+    "eslint-plugin-prettier": "^5.4.1",
     "jest": "^30.0.0",
     "ts-jest": "^29.4.0",
     "ts-jest-resolver": "^2.0.1",

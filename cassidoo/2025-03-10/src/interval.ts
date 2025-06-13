@@ -42,10 +42,10 @@ export function findLargestInterval(arr: string[]): number {
   let maxInterval = 0;
   let prevValue = -1;
   for (let i = 0; i < arr.length; i++) {
-    let noteStr = arr[i];
+    const noteStr = arr[i];
 
     // Validate the note format and get the note portion of the semitone value.
-    let note = noteStr[0];
+    const note = noteStr[0];
     let noteValue = notes[note as keyof typeof notes];
     if (noteValue === undefined) {
       throw new Error(`Invalid note: ${noteStr}`);
@@ -64,7 +64,7 @@ export function findLargestInterval(arr: string[]): number {
     }
 
     // Use the note value and octave value to calculate the semitone value.
-    let semitoneValue = noteValue + parseInt(noteStr[nextIndex], 10) * 12;
+    const semitoneValue = noteValue + parseInt(noteStr[nextIndex], 10) * 12;
 
     // Ensure the semitone value is within the valid range.
     if (semitoneValue < minVal || semitoneValue > maxVal) {

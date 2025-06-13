@@ -262,10 +262,11 @@ yaml-format: node_modules/.installed ## Format YAML files.
 #####################################################################
 
 .PHONY: lint
-lint: actionlint clippy markdownlint renovate-config-validator textlint yamllint zizmor ## Run all linters.
-	# TODO(#53): Move lint target to aoc2024.
-	# @make -C aoc2024 lint
+lint: actionlint markdownlint renovate-config-validator textlint yamllint zizmor ## Run all linters.
+	@make -C aoc2024 lint
 	@make -C cassidoo lint
+	# TODO(#54): Move lintiing of euler to it's own Makefile.
+	# @make -C euler lint
 
 .PHONY: actionlint
 actionlint: $(AQUA_ROOT_DIR)/.installed ## Runs the actionlint linter.
@@ -284,23 +285,6 @@ actionlint: $(AQUA_ROOT_DIR)/.installed ## Runs the actionlint linter.
 		else \
 			actionlint $${files}; \
 		fi
-
-.PHONY: clippy
-clippy: ## Runs clippy linter.
-	@set -euo pipefail; \
-		exit_code=0; \
-		files=$$( \
-			git ls-files --deduplicate \
-				'Cargo.toml' '*/Cargo.toml' \
-				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
-		); \
-		for f in $${files}; do\
-			echo "Running clippy on $${f}"; \
-			if ! cargo clippy --manifest-path "$${f}" -- -D warnings; then \
-				exit_code=1; \
-			fi; \
-		done; \
-		exit "$${exit_code}"
 
 .PHONY: golangci-lint
 golangci-lint: $(AQUA_ROOT_DIR)/.installed ## Runs golangci-lint linter.

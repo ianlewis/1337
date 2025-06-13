@@ -76,16 +76,24 @@ node_modules/.installed: package.json package-lock.json
 ## Linters
 #####################################################################
 
+lint: clippy ## Run all linters.
+
 .PHONY: clippy
 clippy: ## Runs clippy linter.
 	@set -euo pipefail; \
 		exit_code=0; \
-		for i in day*; do\
-			if ! cargo clippy --manifest-path "$$i/Cargo.toml" -- -D warnings; then \
+		files=$$( \
+			git ls-files --deduplicate \
+				'Cargo.toml' '*/Cargo.toml' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			echo "Running clippy on $${f}"; \
+			if ! cargo clippy --manifest-path "$${f}" -- -D warnings; then \
 				exit_code=1; \
 			fi; \
 		done; \
-		exit "$${exit_code}"; \
+		exit "$${exit_code}"
 
 ## Solutions
 #####################################################################
