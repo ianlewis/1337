@@ -70,7 +70,7 @@ eslint: ## Runs eslint linter.
 		); \
 		for f in $${files}; do\
 			echo "Running eslint on $${f}"; \
-			if ! (cd $$(dirname "$${f}") && npm run lint); then \
+			if ! (cd $$(dirname "$${f}") && npm ci && npm run lint); then \
 				exit_code=1; \
 			fi; \
 		done; \
