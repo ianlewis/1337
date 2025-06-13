@@ -49,16 +49,16 @@ fn is_valid_traffic_sequence(_seq: &[&str]) -> Result<bool, Box<dyn error::Error
 
 fn main() -> process::ExitCode {
     let args: Vec<String> = env::args().collect();
-    let args = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
+    let inputs = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
 
-    if args.len() < 2 {
-        eprintln!("Usage: {} <color>...", args[0]);
+    if inputs.len() < 2 {
+        eprintln!("Usage: {} <color>...", inputs[0]);
         return process::ExitCode::from(1);
     }
 
     println!(
         "{:?}",
-        match is_valid_traffic_sequence(&args[1..args.len()]) {
+        match is_valid_traffic_sequence(&inputs[1..inputs.len()]) {
             Ok(v) => v,
             Err(e) => {
                 eprintln!("Error: {}", e);
