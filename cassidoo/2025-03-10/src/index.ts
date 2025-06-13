@@ -15,6 +15,7 @@
 import { findLargestInterval } from "./interval.js";
 
 function main(arr: string[]): number {
+  // eslint-disable-next-line no-console
   console.log(findLargestInterval(arr));
   return 0;
 }

@@ -57,6 +57,25 @@ help: ## Print all Makefile targets (this message).
 ## Linters
 #####################################################################
 
+lint: eslint clippy ## Run all linters.
+
+.PHONY: eslint
+eslint: ## Runs eslint linter.
+	@set -euo pipefail; \
+		exit_code=0; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'package.json' '*/package.json' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			echo "Running eslint on $${f}"; \
+			if ! (cd $$(dirname "$${f}") && npm ci && npm run lint); then \
+				exit_code=1; \
+			fi; \
+		done; \
+		exit "$${exit_code}"
+
 .PHONY: clippy
 clippy: ## Runs clippy linter.
 	@set -euo pipefail; \
@@ -72,7 +91,7 @@ clippy: ## Runs clippy linter.
 				exit_code=1; \
 			fi; \
 		done; \
-		exit "$${exit_code}";
+		exit "$${exit_code}"
 
 ## Solutions
 #####################################################################
@@ -137,6 +156,19 @@ ts-tests: ## Run TypeScript unit tests.
 
 clean: ## Clean up build files.
 	@set -euo pipefail;\
-		for i in day*; do\
-			rm -rf "$$i/target";\
-		done;
+		files=$$( \
+			git ls-files --deduplicate \
+				'Cargo.toml' '*/Cargo.toml' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			(cd $$(dirname "$${f}") && cargo clean) \
+		done; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'package.json' '*/package.json' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			(cd $$(dirname "$${f}") && npm run clean) \
+		done
