@@ -156,6 +156,19 @@ ts-tests: ## Run TypeScript unit tests.
 
 clean: ## Clean up build files.
 	@set -euo pipefail;\
-		for i in day*; do\
-			rm -rf "$$i/target";\
-		done;
+		files=$$( \
+			git ls-files --deduplicate \
+				'Cargo.toml' '*/Cargo.toml' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			(cd $$(dirname "$${f}") && cargo clean) \
+		done; \
+		files=$$( \
+			git ls-files --deduplicate \
+				'package.json' '*/package.json' \
+				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+		); \
+		for f in $${files}; do\
+			(cd $$(dirname "$${f}") && npm run clean) \
+		done
