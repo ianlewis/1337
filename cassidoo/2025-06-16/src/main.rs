@@ -65,7 +65,7 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
                         .nth(i)
                         .ok_or(format!("2 Invalid ordinal format '{}' at pos {}", name, i))?;
                     if next_c != *one_c {
-                        break; // Stop if we reach a character that is not 'C'
+                        break; // Stop if we reach a character that is not 'I', 'X', or 'C'
                     }
                     total += base;
                     i += 1; // Move to the next character
@@ -77,7 +77,7 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
             while i < name.len() {
                 let next_c = name.chars().nth(i);
                 if next_c != Some(*one_c) {
-                    break; // Stop if we reach a character that is not 'C'
+                    break; // Stop if we reach a character that is not 'I', 'X', or 'C'
                 }
                 total += base;
                 i += 1; // Move to the next character
