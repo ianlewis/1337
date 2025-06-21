@@ -49,21 +49,20 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
         );
         let c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
         if c == *one_c {
-            total += base;
-            i += 1; // Move to the next character
-            let next_c = name.chars().nth(i);
+            // Peek at the next character to determine if it's a subtractive notation
+            let next_c = name.chars().nth(i + 1);
             if next_c == Some(*five_c) {
-                total += 3 * base; // CD is 400
-                i += 1; // Move to the next character
+                total += 4 * base; // subtractive notation for IV, XL, CD, etc.
+                i += 2; // Consume the one and five characters
             } else if next_c == Some(*ten_c) {
-                total += 8 * base; // CM is 900
-                i += 1; // Move to the next character
+                total += 9 * base; // e.g. subtractive notation for IX, XC, CM
+                i += 2; // Consume the one and ten characters
             } else {
                 while i < name.len() {
                     let next_c = name
                         .chars()
                         .nth(i)
-                        .ok_or(format!("2 Invalid ordinal format '{}' at pos {}", name, i))?;
+                        .ok_or(format!("Invalid ordinal format '{}' at pos {}", name, i))?;
                     if next_c != *one_c {
                         break; // Stop if we reach a character that is not 'I', 'X', or 'C'
                     }
