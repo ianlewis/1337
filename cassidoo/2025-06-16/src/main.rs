@@ -35,7 +35,7 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
         i += 1; // Move to the next character
     }
 
-    // Parse 100s
+    // Parse 100s - 1s places
     let dec_places = [
         ('C', 'D', 'M', 100),
         ('X', 'L', 'C', 10),
