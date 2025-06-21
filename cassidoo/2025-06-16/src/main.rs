@@ -43,20 +43,27 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
     ];
 
     for (one_c, five_c, ten_c, base) in dec_places.iter() {
+        println!(
+            "Parsing: one_c: {}, five_c: {}, ten_c: {}, base: {}",
+            one_c, five_c, ten_c, base
+        );
         let c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
         if c == *one_c {
             total += base;
             i += 1; // Move to the next character
-            let next_c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
-            if next_c == *five_c {
+            let next_c = name.chars().nth(i);
+            if next_c == Some(*five_c) {
                 total += 3 * base; // CD is 400
                 i += 1; // Move to the next character
-            } else if next_c == *ten_c {
+            } else if next_c == Some(*ten_c) {
                 total += 8 * base; // CM is 900
                 i += 1; // Move to the next character
             } else {
                 while i < name.len() {
-                    let next_c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
+                    let next_c = name
+                        .chars()
+                        .nth(i)
+                        .ok_or(format!("2 Invalid ordinal format '{}' at pos {}", name, i))?;
                     if next_c != *one_c {
                         break; // Stop if we reach a character that is not 'C'
                     }
@@ -68,8 +75,8 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
             total += 5 * base; // D or L or V
             i += 1; // Move to the next character
             while i < name.len() {
-                let next_c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
-                if next_c != *one_c {
+                let next_c = name.chars().nth(i);
+                if next_c != Some(*one_c) {
                     break; // Stop if we reach a character that is not 'C'
                 }
                 total += base;
@@ -83,7 +90,7 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
     }
 
     if i < name.len() {
-        return Err("Invalid ordinal format".into());
+        return Err(format!("Invalid ordinal format '{}': trailing characters", name).into());
     }
 
     Ok(total)
@@ -93,17 +100,25 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
 fn sort_monarchs(monarchs: &[&str]) -> Result<Vec<String>, Box<dyn error::Error>> {
     let mut m = monarchs
         .iter()
-        .map(|&name| name.to_string())
-        .collect::<Vec<String>>();
-    m.sort_by_key(|name| {
-        let parts: Vec<&str> = name.split_whitespace().collect();
-        let name_part = parts[..parts.len() - 1].join(" ");
-        let ordinal_part = parts.last().unwrap_or(&"");
-        let ordinal_number = parse_ordinal(ordinal_part).unwrap_or(0);
-        (name_part, ordinal_number)
-    });
+        .map(
+            |&name| -> Result<(String, String, u32), Box<dyn error::Error>> {
+                let name = name.to_string();
+                let parts: Vec<&str> = name.split_whitespace().collect();
+                let name_part = parts[..parts.len() - 1].join(" ");
+                let ordinal_part = parts.last().ok_or("missing value")?;
+                println!(
+                    "name: {}, name_part: {}, ordinal_part: {}",
+                    name, name_part, ordinal_part
+                );
+                let ordinal_number = parse_ordinal(ordinal_part)?;
+                Ok((name, name_part, ordinal_number))
+            },
+        )
+        .collect::<Result<Vec<_>, Box<dyn error::Error>>>()?;
 
-    Ok(m)
+    m.sort_by_key(|k| (k.1.clone(), k.2));
+
+    Ok(m.into_iter().map(|(name, _, _)| name).collect())
 }
 
 fn main() -> process::ExitCode {
@@ -143,11 +158,12 @@ mod tests {
         assert_eq!(parse_ordinal("MCCXLIV")?, 1244);
         assert_eq!(parse_ordinal("V")?, 5);
         assert_eq!(parse_ordinal("VI")?, 6);
+        assert_eq!(parse_ordinal("I")?, 1);
         Ok(())
     }
 
     #[test]
-    fn test_is_valid_traffic_sequence() -> Result<(), Box<dyn error::Error>> {
+    fn test_sort_monarchs() -> Result<(), Box<dyn error::Error>> {
         assert_eq!(
             sort_monarchs(&["Louis IX", "Louis VIII", "Philip II", "Philip I"])?,
             vec!["Louis VIII", "Louis IX", "Philip I", "Philip II"]
