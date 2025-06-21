@@ -43,10 +43,6 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
     ];
 
     for (one_c, five_c, ten_c, base) in dec_places.iter() {
-        println!(
-            "Parsing: one_c: {}, five_c: {}, ten_c: {}, base: {}",
-            one_c, five_c, ten_c, base
-        );
         let c = name.chars().nth(i).ok_or("Invalid ordinal format")?;
         if c == *one_c {
             // Peek at the next character to determine if it's a subtractive notation
@@ -97,7 +93,7 @@ fn parse_ordinal(name: &str) -> Result<u32, Box<dyn error::Error>> {
 
 // sort_monarchs sorts a sequence of monarchs by their name and then their ordinal number.
 fn sort_monarchs(monarchs: &[&str]) -> Result<Vec<String>, Box<dyn error::Error>> {
-    let mut m = monarchs
+    let mut monarchs_with_sort_key = monarchs
         .iter()
         .map(
             |&name| -> Result<(String, String, u32), Box<dyn error::Error>> {
@@ -115,9 +111,12 @@ fn sort_monarchs(monarchs: &[&str]) -> Result<Vec<String>, Box<dyn error::Error>
         )
         .collect::<Result<Vec<_>, Box<dyn error::Error>>>()?;
 
-    m.sort_by_key(|k| (k.1.clone(), k.2));
+    monarchs_with_sort_key.sort_by_key(|k| (k.1.clone(), k.2));
 
-    Ok(m.into_iter().map(|(name, _, _)| name).collect())
+    Ok(monarchs_with_sort_key
+        .into_iter()
+        .map(|(name, _, _)| name)
+        .collect())
 }
 
 fn main() -> process::ExitCode {
