@@ -2,7 +2,7 @@
 name = "cassidoo-2025-06-16"
 version = "0.1.0"
 edition = "2024"
-rust_version = "1.86.0"
+rust-version = "1.86.0"
 rust-version = "1.86.0"
 
 [dependencies]
