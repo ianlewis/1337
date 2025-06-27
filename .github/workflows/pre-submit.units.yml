@@ -39,7 +39,7 @@ jobs:
       - name: Install Rust toolchain
         run: |
           rustup update --no-self-update 1.86.0
-          rustup component add --toolchain 0.1.86 clippy
+          rustup component add --toolchain 1.86.0 clippy
           rustup default 1.86.0
       - run: make -C aoc2024 lint
 
@@ -91,7 +91,7 @@ jobs:
       - name: Install Rust toolchain
         run: |
           rustup update --no-self-update 1.86.0
-          rustup component add --toolchain 0.1.86 clippy
+          rustup component add --toolchain 1.86.0 clippy
           rustup default 1.86.0
       - run: make -C cassidoo lint
 
