@@ -265,8 +265,8 @@ yaml-format: node_modules/.installed ## Format YAML files.
 lint: actionlint markdownlint renovate-config-validator textlint yamllint zizmor ## Run all linters.
 	@make -C aoc2024 lint
 	@make -C cassidoo lint
-	# TODO(#54): Move lintiing of euler to it's own Makefile.
-	# @make -C euler lint
+	@# TODO(#54): Move lintiing of euler to it's own Makefile.
+	@# @make -C euler lint
 
 .PHONY: actionlint
 actionlint: $(AQUA_ROOT_DIR)/.installed ## Runs the actionlint linter.

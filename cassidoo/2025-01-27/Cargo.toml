@@ -2,5 +2,6 @@
 name = "cassidoo-2025-01-27"
 version = "0.1.0"
 edition = "2021"
+rust_version = "1.86.0"
 
 [dependencies]
