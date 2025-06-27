@@ -30,7 +30,7 @@ AQUA_REPO ?= github.com/aquaproj/aqua
 AQUA_CHECKSUM.Linux.x86_64 = 6908509aa0c985ea60ed4bfdc69a69f43059a6b539fb16111387e1a7a8d87a9f
 AQUA_CHECKSUM ?= $(AQUA_CHECKSUM.$(uname_s).$(uname_m))
 AQUA_URL = https://$(AQUA_REPO)/releases/download/v$(AQUA_VERSION)/aqua_$(kernel)_$(arch).tar.gz
-AQUA_ROOT_DIR = .aqua
+AQUA_ROOT_DIR = $(REPO_ROOT)/.aqua
 
 # The help command prints targets in groups. Help documentation in the Makefile
 # uses comments with double hash marks (##). Documentation is printed by the
@@ -92,8 +92,10 @@ node_modules/.installed: package-lock.json
 		echo "$(AQUA_CHECKSUM)  $${tempfile}" | sha256sum -c; \
 		tar -x -C .bin/aqua-$(AQUA_VERSION) -f "$${tempfile}"
 
-$(AQUA_ROOT_DIR)/.installed: aqua.yaml .bin/aqua-$(AQUA_VERSION)/aqua
-	@AQUA_ROOT_DIR="$(AQUA_ROOT_DIR)" ./.bin/aqua-$(AQUA_VERSION)/aqua --config aqua.yaml install
+$(AQUA_ROOT_DIR)/.installed: .aqua.yaml .aqua-checksums.json .bin/aqua-$(AQUA_VERSION)/aqua
+	@AQUA_ROOT_DIR="$(AQUA_ROOT_DIR)" ./.bin/aqua-$(AQUA_VERSION)/aqua \
+		--config .aqua.yaml \
+		install
 	@touch $@
 
 ## Tests
@@ -151,21 +153,29 @@ license-headers: ## Update license headers.
 .PHONY: format
 format: go-format js-format json-format md-format rust-format ts-format yaml-format ## Format all files
 
-go-format:
+go-format: $(AQUA_ROOT_DIR)/.installed ## Format Go files.
 	@set -euo pipefail; \
 		exit_code=0; \
-		files=$$( \
+		proj_files=$$( \
 			git ls-files --deduplicate \
 				'go.mod' '*/go.mod' \
 				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
 		); \
-		for f in $${files}; do\
+		PATH="$(REPO_ROOT)/.bin/aqua-$(AQUA_VERSION):$(AQUA_ROOT_DIR)/bin:$${PATH}"; \
+		AQUA_ROOT_DIR="$(AQUA_ROOT_DIR)"; \
+		for f in $${proj_files}; do\
 			d=$$(dirname "$${f}"); \
 			echo "Formatting Go files in $${d}"; \
 			if ! ( \
-				cd "$${d}" || exit 1; \
-				go tool mvdan.cc/gofumpt -w .; \
-				go tool github.com/daixiang0/gci write  --skip-generated -s standard -s default -s "prefix($$(go list -m))" .; \
+				cd "$${d}"; \
+				files=$$( \
+					git ls-files --deduplicate \
+						'*.go' \
+						| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
+				); \
+				gofumpt -l -w $${files}; \
+				goimports -l -w $${files}; \
+				gci write --skip-generated --skip-vendor -s standard -s default -s localmodule $${files}; \
 			); then \
 				exit_code=1; \
 			fi; \
