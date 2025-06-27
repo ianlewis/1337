@@ -410,6 +410,7 @@ textlint: node_modules/.installed $(AQUA_ROOT_DIR)/.installed ## Runs the textli
 				'*.md' \
 				'*.txt' \
 				':!:requirements*.txt' \
+				':!:*.in.txt' \
 				| while IFS='' read -r f; do [ -f "$${f}" ] && echo "$${f}" || true; done \
 		); \
 		if [ "$${files}" == "" ]; then \

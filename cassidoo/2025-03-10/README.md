@@ -1,4 +1,4 @@
-# cassidoo 2025-03-10
+# Cassidoo 2025-03-10
 
 **Write a function that takes a list of piano keys played in sequence and returns
 the largest interval (in semitones) between any two consecutive keys.** Assume

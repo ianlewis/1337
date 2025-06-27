@@ -1,4 +1,4 @@
-# cassidoo 2025-02-24
+# Cassidoo 2025-02-24
 
 Cassidoo's Feb 24, 2025 interview question of the week from her
 [newsletter](https://buttondown.com/cassidoo/archive/we-must-choose-kind-words-that-lift-people-up/).

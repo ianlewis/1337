@@ -1,3 +1,5 @@
-# cassidoo Interview Questions of the Week
+# Cassidoo Interview Questions of the Week
 
-https://cassidoo.co/newsletter/
+This directory contains solutions for the interview questions of the week from
+Cassidy Williams' newsletter, [Rendezvous with
+Cassidoo](https://cassidoo.co/newsletter/).

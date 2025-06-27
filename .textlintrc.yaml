@@ -20,4 +20,84 @@ filters:
 rules:
   spelling:
     language: "en"
-    skipPatterns: []
+    skipPatterns:
+      # Allow numbers in numerical format.
+      - "/[0-9]+/"
+
+      # Names
+      - "Collatz" # Collatz sequence is a mathematical term.
+      - "Cassidoo" # Cassidy Williams, a well-known developer and writer.
+      - "Möbius" # Möbius strip is a mathematical object.
+
+      # General terms
+      - "/[Ll]anternfish/"
+      - "/[Oo]nsen/" # Onsen is a Japanese term for hot springs.
+      - "/[Ss]tarship/"
+      - "/[Tt]eleported/"
+      - "/[Tt]railhead/"
+      - "/[Uu]nvisited/"
+      - "/[Qq]uadcopter/"
+
+      # Computing terms
+      - "LEET" # Leet is internet slang.
+      - "/[Bb]itwise/"
+      - "/[Ff]ilesystem/"
+      - "/[Mm]utex/"
+      - "/[Pp]icosecond/"
+      - "/[Pp]ixelated/"
+      - "/[Pp]ostfix/"
+      - "/[Pp]seudorandom/"
+      - "/[Uu]ncorrupted/"
+      - "/[Uu]nrecoverably/"
+
+      # Advent of Code problems
+      - "/[Aa]lchemical/"
+      - "/[Aa]mphipod/"
+      - "/[Aa]ntinode/"
+      - "/[Bb]oop/"
+      - "/[Cc]hronospatial/"
+      - "/[Cc]ollinearity/"
+      - "/[Dd]atalink/"
+      - "EBHQ" # Easter Bunny HQ, a fictional location in Advent of Code.
+      - "/[Ff]ragmenter/"
+      - "/[Hh]elixes/"
+      - "/[Pp]lutonian/"
+      - "/[Pp]ushdown/"
+      - "/[Rr]etroencabulator/"
+      - "/[Uu]n-scorched/"
+      - "X-MASes"
+
+      # Imported from repo-template
+      - "CHANGELOG"
+      - "CODEOWNER"
+      - "CLI"
+      - "CVSS"
+      - "DCO"
+      - "PR"
+      - "UI"
+      - "YAML"
+      - "Changelog"
+      - "CodeQL"
+      - "Dependabot"
+      - "JavaScript"
+      - "MacOS"
+      - "Makefile"
+      - "Node.js"
+      - "OpenSSF"
+      - "TODO"
+      - "e2e"
+      - "/[Ff]ormatter/"
+      - "/[Ll]inter/"
+      - "/[Pp]re/"
+      - "/[Rr]eproducibility/"
+      - "/[Rr]uleset/"
+      - "/[Rr]untime/"
+      - "/[Ss]exualized/"
+      - "/[Ss]ocio-economic/"
+      - "/[Ss]ubmodule/"
+      - "/[Uu]serspace/"
+      - "/[Vv]endored/"
+      - "/[Vv]irtualenv/"
+      - "/v[0-9]+/"
+      - "/[0-9]+/"
+      - ":white_check_mark:"

@@ -1,6 +1,6 @@
 # --- Day 23: LAN Party ---
 
-https://adventofcode.com/2024/day/23
+[`https://adventofcode.com/2024/day/23`](https://adventofcode.com/2024/day/23)
 
 ## --- Part One ---
 
@@ -48,8 +48,8 @@ td-yn
 ```
 
 Each line of text in the network map represents a single connection; the line
-kh-tc represents a connection between the computer named kh and the computer
-named tc. Connections aren't directional; tc-kh would mean exactly the same
+`kh-tc` represents a connection between the computer named `kh` and the computer
+named `tc`. Connections aren't directional; `tc-kh` would mean exactly the same
 thing.
 
 LAN parties typically involve multiplayer games, so maybe you can locate it by
@@ -105,8 +105,8 @@ the LAN party, that computer will have a connection to every other computer at
 the LAN party.
 
 In the above example, the largest set of computers that are all connected to
-each other is made up of co, de, ka, and ta. Each computer in this set has a
-connection to every other computer in the set:
+each other is made up of `co`, `de`, `ka`, and `ta`. Each computer in this set
+has a connection to every other computer in the set:
 
 ```text
 ka-co
