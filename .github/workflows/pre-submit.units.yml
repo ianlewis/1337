@@ -38,9 +38,9 @@ jobs:
       - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup component add --toolchain stable clippy
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup component add --toolchain 0.1.86 clippy
+          rustup default 1.86.0
       - run: make -C aoc2024 lint
 
   aoc-unit-tests:
@@ -51,8 +51,8 @@ jobs:
           persist-credentials: false
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup default 1.86.0
       - run: |
           make -C aoc2024 unit-tests
 
@@ -74,9 +74,8 @@ jobs:
 
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup component add --toolchain stable rustfmt rust-src
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup default 1.86.0
 
       - working-directory: "1337"
         run: |
@@ -91,9 +90,9 @@ jobs:
       - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup component add --toolchain stable clippy
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup component add --toolchain 0.1.86 clippy
+          rustup default 1.86.0
       - run: make -C cassidoo lint
 
   cassidoo-unit-tests:
@@ -105,9 +104,8 @@ jobs:
       - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup component add --toolchain stable rustfmt rust-src
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup default 1.86.0
       - run: |
           make -C cassidoo unit-tests
 
@@ -153,9 +151,8 @@ jobs:
           go-version: "1.24"
       - name: Install Rust toolchain
         run: |
-          rustup update --no-self-update stable
-          rustup component add --toolchain stable rustfmt
-          rustup default stable
+          rustup update --no-self-update 1.86.0
+          rustup default 1.86.0
       - run: |
           make format
       - name: check diff
