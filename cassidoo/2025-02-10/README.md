@@ -1,4 +1,4 @@
-# cassidoo 2025-02-10
+# Cassidoo 2025-02-10
 
 Cassidoo's Feb 10, 2025 interview question of the week from her
 [newsletter](https://buttondown.com/cassidoo/archive/the-world-is-a-museum-of-other-peoples-passion/).

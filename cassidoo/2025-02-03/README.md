@@ -1,4 +1,4 @@
-# cassidoo 2025-02-03
+# Cassidoo 2025-02-03
 
 Cassidoo's Feb 3, 2025 interview question of the week from her
 [newsletter](https://buttondown.com/cassidoo/archive/if-im-scared-be-scared-allow-it-release-it-move/).

@@ -4,13 +4,20 @@
     // Use the best-practices preset. Adds options to pin dependencies.
     // https://docs.renovatebot.com/upgrade-best-practices/#whats-in-the-configbest-practices-preset
     "config:best-practices",
+
     // Update dependencies monthly
     "schedule:monthly",
+
     // Add DCO sign-off
     ":gitSignOff",
+
     // Add Aqua present to allow updating CLI tools.
     // https://aquaproj.github.io/docs/guides/renovate/
     "github>aquaproj/aqua-renovate-config#2.7.5",
+
+    // Update version numbers in Makefile.
+    // https://docs.renovatebot.com/presets-customManagers/#custommanagersmakefileversions
+    "customManagers:makefileVersions",
   ],
 
   // Security alerts/updates happen more frequently.
@@ -23,19 +30,18 @@
   // issues is more intuitive.
   configWarningReuseIssue: false,
 
-  // Update the Aqua version set in the Makefile.
-  customManagers: [
-    {
-      customType: "regex",
-      fileMatch: ["Makefile"],
-      matchStrings: ["AQUA_VERSION \??= *(?<currentValue>\\S+)"],
-      depNameTemplate: "aquaproj/aqua",
-      datasourceTemplate: "github-releases",
-    },
-  ],
-
   // Group various ecosystem updates. Security updates are always separate.
   packageRules: [
+    {
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "aqua",
+      matchFileNames: ["aqua.yaml", "aqua-checksums.yaml"],
+    },
+    {
+      matchUpdateTypes: ["minor", "patch"],
+      groupName: "makefile",
+      matchFileNames: ["Makefile"],
+    },
     {
       matchManagers: ["github-actions"],
       matchUpdateTypes: ["minor", "patch"],

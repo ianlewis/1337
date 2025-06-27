@@ -9,7 +9,7 @@ of well-documented and efficient code snippets that can be used as references.
 ## Contents
 
 - [Advent of Code 2024](./aoc2024)
-- [cassidoo Interview Questions of the Week](./cassidoo)
+- [Cassidoo Interview Questions of the Week](./cassidoo)
 - [Project Euler Solutions](./euler)
 
 ## Makefile
@@ -49,7 +49,7 @@ Maintenance
   clean                     Delete temporary files.
 ```
 
-## Formating and linting
+## Formatting and linting
 
 Some `Makefile` targets for basic formatters and linters are included along
 with GitHub Actions pre-submits. Versioning of these tools is done via the
@@ -70,11 +70,11 @@ The following tools are installed locally:
 
 - [`yamllint`]: For YAML (e.g. GitHub Actions workflows). (installed in Python
   virtualenv `.venv`).
-- [`prettier`]: For formatting markdown and yaml (installed in local
+- [`prettier`]: For formatting markdown and YAML (installed in local
   `node_modules`).
 - [`markdownlint`]: For linting markdown (installed in local `node_modules`).
 
-`Makefile` targets and linter/formatter config are designed to respect
+`Makefile` targets and linter/formatter configuration are designed to respect
 `.gitignore` and not cross `git` submodules boundaries. However, you will need
 to add files using `git add` for new files before they are picked up.
 

@@ -190,33 +190,13 @@ jobs:
           go-version: "1.24"
       - run: make golangci-lint
 
-  zizmor:
+  fixme:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - run: make zizmor
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
-        with:
-          name: SARIF file
-          path: results.sarif
-          retention-days: 5
-
-      - name: Upload to code-scanning
-        # NOTE: Uploading SARIF requires GitHub Enterprise and GitHub Advanced Security license for private repositories.
-        if: github.event.repository.private == false
-        uses: github/codeql-action/upload-sarif@6bb031afdd8eb862ea3fc1848194185e076637e5 # v3.28.11
-        with:
-          sarif_file: zizmor.sarif.json
-          category: zizmor
+      - run: make fixme
 
   markdownlint:
     runs-on: ubuntu-latest
@@ -259,38 +239,30 @@ jobs:
           persist-credentials: false
       - run: make yamllint
 
-  todos:
+  zizmor:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
-      - name: "Install slsa-verifier"
+      - run: make zizmor
         env:
-          SLSA_VERIFIER_VERSION: "2.7.0"
-          SLSA_VERIFIER_CHECKSUM: "499befb675efcca9001afe6e5156891b91e71f9c07ab120a8943979f85cc82e6"
-        run: |
-          # Install slsa-verifier
-          curl -sSLo slsa-verifier "https://github.com/slsa-framework/slsa-verifier/releases/download/v${SLSA_VERIFIER_VERSION}/slsa-verifier-linux-amd64"
-          echo "slsa-verifier checksum is $(sha256sum slsa-verifier | awk '{ print $1 }')"
-          echo "expected checksum is ${SLSA_VERIFIER_CHECKSUM}"
-          echo "${SLSA_VERIFIER_CHECKSUM}  slsa-verifier" | sha256sum --strict --check --status || exit 1
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          chmod +x ./slsa-verifier
-          mv ./slsa-verifier /usr/local/bin
-      - name: "Install todos"
-        env:
-          TODOS_VERSION: "0.12.0"
-        run: |
-          # Install todos
-          curl -sSLo todos "https://github.com/ianlewis/todos/releases/download/v${TODOS_VERSION}/todos-linux-amd64"
-          curl -sSLo todos.intoto.jsonl "https://github.com/ianlewis/todos/releases/download/v${TODOS_VERSION}/todos-linux-amd64.intoto.jsonl"
-          slsa-verifier verify-artifact todos --provenance-path todos.intoto.jsonl --source-uri github.com/ianlewis/todos --source-tag "v${TODOS_VERSION}"
+      - name: Upload artifact
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5
 
-          chmod +x ./todos
-          mv ./todos /usr/local/bin
-          result=$(todos --output github --todo-types="FIXME,Fixme,fixme,BUG,Bug,bug,XXX,COMBAK")
-          if [ -n "${result}" ]; then
-            echo "${result}"
-            exit 1
-          fi
+      - name: Upload to code-scanning
+        # NOTE: Uploading SARIF requires GitHub Enterprise and GitHub Advanced Security license for private repositories.
+        if: github.event.repository.private == false
+        uses: github/codeql-action/upload-sarif@6bb031afdd8eb862ea3fc1848194185e076637e5 # v3.28.11
+        with:
+          sarif_file: zizmor.sarif.json
+          category: zizmor

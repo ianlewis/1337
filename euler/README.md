@@ -1,5 +1,4 @@
-# euler
+# Project Euler Solutions
 
-This repo contains my solutions to Project Euler problems.
-
-https://projecteuler.net/
+This directory contains my solutions to [Project
+Euler](https://projecteuler.net/) problems.

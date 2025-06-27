@@ -4,7 +4,7 @@
 
 Advent of Code 2024 solutions.
 
-https://adventofcode.com/
+[`https://adventofcode.com/`](https://adventofcode.com/)
 
 - [Day 1: Historian Hysteria](./day1)
 - [Day 2: Red-Nosed Reports](./day2)

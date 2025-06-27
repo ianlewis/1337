@@ -1,4 +1,4 @@
-# cassidoo 2025-03-03
+# Cassidoo 2025-03-03
 
 **A store is going out of business and will reduce the price of all products by
 10% every week leading up to the closing date. Given the `closingDate`,
