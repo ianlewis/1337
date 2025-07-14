@@ -47,6 +47,7 @@ rules:
       - "/[Pp]ixelated/"
       - "/[Pp]ostfix/"
       - "/[Pp]seudorandom/"
+      - "/[Ss]ubarray/"
       - "/[Uu]ncorrupted/"
       - "/[Uu]nrecoverably/"
 
