@@ -25,6 +25,7 @@ rules:
       - "/[0-9]+/"
 
       # Names
+      - "LeetCode" # LeetCode is a popular coding platform.
       - "Collatz" # Collatz sequence is a mathematical term.
       - "Cassidoo" # Cassidy Williams, a well-known developer and writer.
       - "Möbius" # Möbius strip is a mathematical object.
