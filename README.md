@@ -11,6 +11,7 @@ of well-documented and efficient code snippets that can be used as references.
 - [Advent of Code 2024](./aoc2024)
 - [Cassidoo Interview Questions of the Week](./cassidoo)
 - [Project Euler Solutions](./euler)
+- [LeetCode Solutions](./leetcode)
 
 ## Makefile
 
@@ -31,21 +32,25 @@ Tools
   license-headers           Update license headers.
 Formatting
   format                    Format all files
+  go-format                 Format Go files.
+  js-format                 Format YAML files.
   json-format               Format JSON files.
   md-format                 Format Markdown files.
   rust-format               Runs rustfmt.
+  ts-format                 Format YAML files.
   yaml-format               Format YAML files.
 Linting
   lint                      Run all linters.
   actionlint                Runs the actionlint linter.
-  clippy                    Runs clippy linter.
+  fixme                     Check for outstanding FIXMEs.
   golangci-lint             Runs golangci-lint linter.
-  zizmor                    Runs the zizmor linter.
   markdownlint              Runs the markdownlint linter.
   renovate-config-validator Validate Renovate configuration.
   textlint                  Runs the textlint linter.
   yamllint                  Runs the yamllint linter.
+  zizmor                    Runs the zizmor linter.
 Maintenance
+  todos                     Check for outstanding TODOs.
   clean                     Delete temporary files.
 ```
 
