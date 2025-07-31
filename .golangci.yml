@@ -191,6 +191,7 @@ linters-settings:
 
           # This project.
           - "github.com/ianlewis/1337"
+          - "github.com/google/go-cmp/cmp"
         deny:
           - pkg: "reflect"
             desc: Use go-cmp instead.

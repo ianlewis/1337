@@ -107,6 +107,7 @@ $(AQUA_ROOT_DIR)/.installed: .aqua.yaml .aqua-checksums.json .bin/aqua-$(AQUA_VE
 unit-tests: ## Run unit tests.
 	@make -C aoc2024 unit-tests
 	@make -C cassidoo unit-tests
+	@make -C leetcode unit-tests
 
 integration-tests: ## Run integration tests.
 	@make -C aoc2024 integration-tests
