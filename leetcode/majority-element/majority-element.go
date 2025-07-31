@@ -17,7 +17,9 @@
 package majorityelement
 
 func majorityElement(nums []int) int {
-	m := make(map[int]int, len(nums))
+	// The problem states that there is always a majority element, so there will
+	// be at maximum len(nums)/2 + 1 unique elements in the map.
+	m := make(map[int]int)
 	for _, v := range nums {
 		if n, ok := m[v]; ok {
 			m[v] = n + 1
