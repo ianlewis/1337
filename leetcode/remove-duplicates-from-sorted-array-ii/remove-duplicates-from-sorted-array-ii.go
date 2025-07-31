@@ -16,6 +16,8 @@
 // LeetCode problem 80: Remove Duplicates from Sorted Array II.
 package removeduplicatesfromsortedarrayii
 
+// removeDuplicates removes duplicates beyond the second occurrence from a
+// sorted array in-place. The function returns the new length of the array.
 func removeDuplicates(nums []int) int {
 	startIndex := 2
 	if len(nums) < startIndex {

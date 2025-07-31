@@ -16,8 +16,8 @@
 // Remove Duplicates from Sorted Array.
 package removeduplicatesfromsortedarray
 
-// removeDuplicates removes duplicates above the first two from a sorted array
-// in-place.
+// removeDuplicates removes duplicates beyond the first occurance from a sorted
+// array in-place.
 func removeDuplicates(nums []int) int {
 	if len(nums) == 0 {
 		return 0
