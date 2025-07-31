@@ -50,7 +50,7 @@ func TestRotate(t *testing.T) {
 			rotate(test.nums, test.k)
 
 			if diff := cmp.Diff(test.expected, test.nums); diff != "" {
-				t.Errorf("rotate(%v, %d) mismatch (-want +got):\n%s", test.nums, test.k, diff)
+				t.Errorf("rotate: (-want +got):\n%s", diff)
 			}
 		})
 	}
