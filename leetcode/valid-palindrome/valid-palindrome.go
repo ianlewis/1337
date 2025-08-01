@@ -50,6 +50,7 @@ func isPalindrome(s string) bool {
 
 	i := 0
 	j := len(s) - 1
+
 	for i < j {
 		left := s[i]
 		if (left < '0' || left > '9') && (left < 'a' || left > 'z') {
@@ -66,6 +67,7 @@ func isPalindrome(s string) bool {
 		if s[i] != s[j] {
 			return false
 		}
+
 		i++
 		j--
 	}

@@ -40,8 +40,8 @@
 //	ransomNote and magazine consist of lowercase English letters.
 package ransomnote
 
-func canConstruct(ransomNote string, magazine string) bool {
-	// Add up all occurences of each letter.
+func canConstruct(ransomNote, magazine string) bool {
+	// Add up all occurrences of each letter.
 	m := make(map[rune]int, len(magazine))
 	for _, r := range magazine {
 		if c, ok := m[r]; ok {
@@ -56,10 +56,12 @@ func canConstruct(ransomNote string, magazine string) bool {
 			if c == 0 {
 				return false
 			}
+
 			m[r] = c - 1 // Remove a letter from the magazine
 		} else {
 			return false
 		}
 	}
+
 	return true
 }
