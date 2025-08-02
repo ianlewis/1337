@@ -71,6 +71,7 @@ func minMeetingRooms(intervals [][]int) int {
 		if intervals[i][0] == intervals[j][0] {
 			return intervals[i][1] < intervals[j][1]
 		}
+
 		return intervals[i][0] < intervals[j][0]
 	})
 
