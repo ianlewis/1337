@@ -41,6 +41,7 @@ func canAttendMeetings(intervals [][]int) bool {
 		if intervals[i][0] == intervals[j][0] {
 			return intervals[i][1] < intervals[j][1]
 		}
+
 		return intervals[i][0] < intervals[j][0]
 	})
 
