@@ -29,6 +29,6 @@ packages:
   - name: jqlang/jq@jq-1.7.1
   - name: golangci/golangci-lint@v1.64.8
   - name: mvdan/gofumpt@v0.8.0
-  - name: daixiang0/gci@v0.13.6
+  - name: daixiang0/gci@v0.14.0
   - name: golang/tools/goimports@v0.34.0
   - name: ianlewis/todos@v0.13.0
